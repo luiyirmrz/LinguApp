@@ -1,0 +1,16 @@
+{
+  "status": "commited",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:8081",
+  "backendAuthType": "public",
+  "executionArgs": {
+    "projectName": "rork-linguapp",
+    "projectPath": "C:\\APP\\LinguApp\\rork-linguapp",
+    "testIds": [],
+    "additionalInstruction": "Please run comprehensive backend API tests for the LinguApp project, focusing on authentication, language services, lessons, gamification, speech services, and user settings. Ensure all endpoints are properly tested with both valid and invalid inputs.",
+    "envs": {
+      "API_KEY": "sk-user-KWrzQPxMptJJYX01EJOhpfiRbewEMqdOI7RL-b8Nj0SNJp9iXHpfN_5imVc7Y48PibU8LSYjxROxBYKK0Qly2pb2ypNtSSRbtOi90bJUf0PnSsJcX-xaIRJJK-BNYIq2zZw"
+    }
+  }
+}

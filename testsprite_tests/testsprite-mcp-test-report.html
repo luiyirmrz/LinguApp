@@ -1,0 +1,435 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Markdown Preview</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          padding: 40px;
+          line-height: 1.6;
+          background: #fdfdfd;
+          color: #333;
+        }
+        pre {
+          background: #f4f4f4;
+          padding: 10px;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        code {
+          font-family: monospace;
+          background: #eee;
+          padding: 2px 4px;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px 12px;
+          text-align: left;
+        }
+        th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>TestSprite AI Testing Report(MCP)</h1>
+<hr>
+<h2>1️⃣ Document Metadata</h2>
+<ul>
+<li><strong>Project Name:</strong> rork-linguapp</li>
+<li><strong>Version:</strong> 1.0.0</li>
+<li><strong>Date:</strong> 2025-01-27</li>
+<li><strong>Prepared by:</strong> TestSprite AI Team</li>
+</ul>
+<hr>
+<h2>2️⃣ Requirement Validation Summary</h2>
+<h3>Requirement: User Authentication</h3>
+<ul>
+<li><strong>Description:</strong> Supports email/password authentication with proper error handling and user feedback.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC001</li>
+<li><strong>Test Name:</strong> User Authentication Successful Login</li>
+<li><strong>Test Code:</strong> <a href="./TC001_User_Authentication_Successful_Login.py">TC001_User_Authentication_Successful_Login.py</a></li>
+<li><strong>Test Error:</strong> Login test failed due to a critical runtime error in the HomeScreen component after entering valid credentials. The error prevents successful authentication and redirection.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/60b74890-b4ab-4ad1-96d2-f287de478113">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Critical error in HomeScreen component due to undefined destructured properties in multilingual hooks, causing runtime exceptions and preventing successful authentication flow and redirection.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC002</li>
+<li><strong>Test Name:</strong> User Authentication Failed Login Attempt</li>
+<li><strong>Test Code:</strong> <a href="./TC002_User_Authentication_Failed_Login_Attempt.py">TC002_User_Authentication_Failed_Login_Attempt.py</a></li>
+<li><strong>Test Error:</strong> Login does not properly handle invalid credentials; no error feedback is shown despite authentication errors like 'auth/user-not-found', causing users to be unaware of failed login attempts.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/f6e75fdc-67a1-44ad-afb4-641398baa970">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Login does not properly handle invalid credentials; no error feedback is shown despite authentication errors, causing users to be unaware of failed login attempts.</li>
+</ul>
+<hr>
+<h4>Test 3</h4>
+<ul>
+<li><strong>Test ID:</strong> TC003</li>
+<li><strong>Test Name:</strong> User Registration with Valid Data</li>
+<li><strong>Test Code:</strong> <a href="./TC003_User_Registration_with_Valid_Data.py">TC003_User_Registration_with_Valid_Data.py</a></li>
+<li><strong>Test Error:</strong> Critical error in SignUpScreen component prevents user interaction with signup form due to undefined destructuring of 'signUp' from auth hook, blocking account creation testing.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/0da61e50-55d8-453e-bdcc-fb338b7a4b85">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Critical error in SignUpScreen component prevents user interaction with signup form due to undefined destructuring of 'signUp' from auth hook, blocking account creation testing.</li>
+</ul>
+<hr>
+<h3>Requirement: Language Learning Features</h3>
+<ul>
+<li><strong>Description:</strong> Core language learning functionality including lessons, exercises, and progress tracking.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC004</li>
+<li><strong>Test Name:</strong> Language Learning Lesson Navigation</li>
+<li><strong>Test Code:</strong> <a href="./TC004_Language_Learning_Lesson_Navigation.py">TC004_Language_Learning_Lesson_Navigation.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC004">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test lesson navigation due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC005</li>
+<li><strong>Test Name:</strong> Greetings Module Functionality</li>
+<li><strong>Test Code:</strong> <a href="./TC005_Greetings_Module_Functionality.py">TC005_Greetings_Module_Functionality.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC005">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test greetings module due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h3>Requirement: Gamification System</h3>
+<ul>
+<li><strong>Description:</strong> XP, streaks, achievements, and progress tracking features.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC006</li>
+<li><strong>Test Name:</strong> Gamification XP System</li>
+<li><strong>Test Code:</strong> <a href="./TC006_Gamification_XP_System.py">TC006_Gamification_XP_System.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC006">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test gamification features due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC007</li>
+<li><strong>Test Name:</strong> Streak Tracking System</li>
+<li><strong>Test Code:</strong> <a href="./TC007_Streak_Tracking_System.py">TC007_Streak_Tracking_System.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC007">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test streak tracking due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h3>Requirement: UI Components and Navigation</h3>
+<ul>
+<li><strong>Description:</strong> User interface components, navigation, and responsive design.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC008</li>
+<li><strong>Test Name:</strong> Navigation Menu Functionality</li>
+<li><strong>Test Code:</strong> <a href="./TC008_Navigation_Menu_Functionality.py">TC008_Navigation_Menu_Functionality.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC008">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test navigation due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC009</li>
+<li><strong>Test Name:</strong> Responsive Design Testing</li>
+<li><strong>Test Code:</strong> <a href="./TC009_Responsive_Design_Testing.py">TC009_Responsive_Design_Testing.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC009">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Low</li>
+<li><strong>Analysis / Findings:</strong> Unable to test responsive design due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h3>Requirement: Language Selection and Settings</h3>
+<ul>
+<li><strong>Description:</strong> Language selection, settings, and user preferences.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC010</li>
+<li><strong>Test Name:</strong> Language Selection Interface</li>
+<li><strong>Test Code:</strong> <a href="./TC010_Language_Selection_Interface.py">TC010_Language_Selection_Interface.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC010">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test language selection due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC011</li>
+<li><strong>Test Name:</strong> User Settings Management</li>
+<li><strong>Test Code:</strong> <a href="./TC011_User_Settings_Management.py">TC011_User_Settings_Management.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC011">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test user settings due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h3>Requirement: Onboarding and User Experience</h3>
+<ul>
+<li><strong>Description:</strong> User onboarding flow and initial user experience.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC012</li>
+<li><strong>Test Name:</strong> Onboarding Flow Completion</li>
+<li><strong>Test Code:</strong> <a href="./TC012_Onboarding_Flow_Completion.py">TC012_Onboarding_Flow_Completion.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC012">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test onboarding flow due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC013</li>
+<li><strong>Test Name:</strong> User Profile Setup</li>
+<li><strong>Test Code:</strong> <a href="./TC013_User_Profile_Setup.py">TC013_User_Profile_Setup.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC013">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test user profile setup due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h3>Requirement: Error Handling and Edge Cases</h3>
+<ul>
+<li><strong>Description:</strong> Error handling, edge cases, and application stability.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC014</li>
+<li><strong>Test Name:</strong> Error Boundary Functionality</li>
+<li><strong>Test Code:</strong> <a href="./TC014_Error_Boundary_Functionality.py">TC014_Error_Boundary_Functionality.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC014">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Error boundaries are not functioning properly as critical errors are not being caught and handled gracefully.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC015</li>
+<li><strong>Test Name:</strong> Network Error Handling</li>
+<li><strong>Test Code:</strong> <a href="./TC015_Network_Error_Handling.py">TC015_Network_Error_Handling.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC015">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test network error handling due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h4>Test 3</h4>
+<ul>
+<li><strong>Test ID:</strong> TC016</li>
+<li><strong>Test Name:</strong> Form Validation and Input Handling</li>
+<li><strong>Test Code:</strong> <a href="./TC016_Form_Validation_and_Input_Handling.py">TC016_Form_Validation_and_Input_Handling.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/6a2700c8-c57e-424e-b344-d41d0e25752b/TC016">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Unable to test form validation due to authentication failures preventing access to main application features.</li>
+</ul>
+<hr>
+<h2>3️⃣ Coverage &amp; Matching Metrics</h2>
+<ul>
+<li><strong>0% of product requirements tested successfully</strong></li>
+<li><strong>0% of tests passed</strong></li>
+<li><strong>Key gaps / risks:</strong></li>
+</ul>
+<blockquote>
+<p>0% of product requirements had successful tests due to critical authentication and hook initialization failures.<br>
+0% of tests passed due to fundamental application errors preventing proper functionality testing.<br>
+<strong>Critical Risks:</strong></p>
+<ul>
+<li>Authentication system completely broken due to undefined hook destructuring</li>
+<li>Multilingual learning hooks not properly initialized</li>
+<li>Error boundaries not functioning properly</li>
+<li>No user feedback for failed authentication attempts</li>
+<li>Application crashes prevent testing of core features</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Total Tests</th>
+<th>✅ Passed</th>
+<th>⚠️ Partial</th>
+<th>❌ Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User Authentication</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Language Learning</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Gamification</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>UI Components</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Language Selection</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Onboarding</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Error Handling</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>4️⃣ Critical Issues Summary</h2>
+<h3><strong>HIGH PRIORITY FIXES REQUIRED:</strong></h3>
+<ol>
+<li>
+<p><strong>Authentication Hook Initialization</strong></p>
+<ul>
+<li><code>useEnhancedAuth</code> hook returning undefined</li>
+<li><code>useLanguage</code> hook returning undefined</li>
+<li><code>useMultilingualLearning</code> hook returning undefined</li>
+<li><strong>Impact:</strong> Complete authentication system failure</li>
+</ul>
+</li>
+<li>
+<p><strong>Error Boundary Implementation</strong></p>
+<ul>
+<li>Error boundaries not catching critical runtime errors</li>
+<li><strong>Impact:</strong> Application crashes instead of graceful error handling</li>
+</ul>
+</li>
+<li>
+<p><strong>User Feedback System</strong></p>
+<ul>
+<li>No error messages displayed for failed login attempts</li>
+<li><strong>Impact:</strong> Poor user experience and confusion</li>
+</ul>
+</li>
+</ol>
+<h3><strong>MEDIUM PRIORITY FIXES:</strong></h3>
+<ol>
+<li>
+<p><strong>Deprecated Dependencies</strong></p>
+<ul>
+<li>Expo AV deprecation warnings</li>
+<li>Shadow style props deprecation</li>
+<li><strong>Impact:</strong> Future compatibility issues</li>
+</ul>
+</li>
+<li>
+<p><strong>Hook Context Providers</strong></p>
+<ul>
+<li>Missing or improperly configured context providers</li>
+<li><strong>Impact:</strong> Runtime errors and undefined behavior</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>5️⃣ Recommendations</h2>
+<h3><strong>Immediate Actions (Critical):</strong></h3>
+<ol>
+<li>Fix authentication hook initialization and context providers</li>
+<li>Implement proper error boundaries with user-friendly error messages</li>
+<li>Add error feedback for failed authentication attempts</li>
+<li>Ensure all required context providers are properly wrapped in the app</li>
+</ol>
+<h3><strong>Short-term Actions:</strong></h3>
+<ol>
+<li>Update deprecated dependencies (Expo AV, shadow styles)</li>
+<li>Add comprehensive error handling throughout the application</li>
+<li>Implement proper loading states and fallbacks</li>
+<li>Add user feedback for all user actions</li>
+</ol>
+<h3><strong>Long-term Actions:</strong></h3>
+<ol>
+<li>Implement comprehensive testing strategy</li>
+<li>Add monitoring and analytics for error tracking</li>
+<li>Implement proper logging system</li>
+<li>Add accessibility improvements</li>
+</ol>
+<hr>
+<p><strong>Report Generated:</strong> 2025-01-27<br>
+<strong>Test Execution Time:</strong> ~5 minutes<br>
+<strong>Total Test Cases:</strong> 16<br>
+<strong>Success Rate:</strong> 0%<br>
+<strong>Critical Issues:</strong> 3<br>
+<strong>High Priority Issues:</strong> 3<br>
+<strong>Medium Priority Issues:</strong> 2</p>
+
+    </body>
+    </html>
+  

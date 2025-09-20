@@ -1,0 +1,512 @@
+{
+  "bundleSize": {
+    "total": {
+      "size": 0,
+      "sizeFormatted": "0 Bytes"
+    }
+  },
+  "dependencies": {
+    "react-native-reanimated": {
+      "version": "~3.17.4",
+      "impact": "high",
+      "recommendation": "Consider lazy loading or alternatives"
+    },
+    "expo-av": {
+      "version": "^15.1.7",
+      "impact": "high",
+      "recommendation": "Consider lazy loading or alternatives"
+    },
+    "lottie-react-native": {
+      "version": "^7.2.2",
+      "impact": "high",
+      "recommendation": "Consider lazy loading or alternatives"
+    },
+    "react-native-chart-kit": {
+      "version": "^6.12.0",
+      "impact": "high",
+      "recommendation": "Consider lazy loading or alternatives"
+    }
+  },
+  "components": {
+    "A1SRSComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 501,
+      "size": 14397
+    },
+    "A1SRSTestComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 588,
+      "size": 16907
+    },
+    "AccessibilityProvider.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 457,
+      "size": 13316
+    },
+    "AdaptiveLessonScreen.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 362,
+      "size": 9583
+    },
+    "AnimatedLessonScreen.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 372,
+      "size": 10209
+    },
+    "Animations.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 382,
+      "size": 9780
+    },
+    "AuthErrorFeedback.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 272,
+      "size": 8080
+    },
+    "AuthSystemTest.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 210,
+      "size": 7089
+    },
+    "AuthWrapper.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 139,
+      "size": 4100
+    },
+    "Button.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 136,
+      "size": 3170
+    },
+    "Card.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 221,
+      "size": 5162
+    },
+    "CodeSplitter.tsx": {
+      "hasMemo": true,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 107,
+      "size": 4481
+    },
+    "ComprehensiveLessonScreen.tsx": {
+      "hasMemo": true,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 874,
+      "size": 26327
+    },
+    "CulturalBackground.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 443,
+      "size": 12606
+    },
+    "CulturalHeader.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 135,
+      "size": 3278
+    },
+    "Dashboard.tsx": {
+      "hasMemo": true,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 925,
+      "size": 26344
+    },
+    "DataMigrationComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 554,
+      "size": 17394
+    },
+    "EmptyStates.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 309,
+      "size": 7708
+    },
+    "EnhancedErrorBoundary.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 527,
+      "size": 14608
+    },
+    "EnhancedLanguageSelector.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 476,
+      "size": 12846
+    },
+    "EnhancedLoadingStates.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 388,
+      "size": 9359
+    },
+    "EnhancedOnboardingComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 1097,
+      "size": 32224
+    },
+    "EnhancedUserFeedback.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 810,
+      "size": 21920
+    },
+    "ErrorAnalyticsDashboard.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 679,
+      "size": 21745
+    },
+    "ErrorBoundary.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 286,
+      "size": 7323
+    },
+    "BaseExercise.tsx": {
+      "hasMemo": true,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 751,
+      "size": 22433
+    },
+    "FillBlankExercise.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": true,
+      "lines": 327,
+      "size": 10060
+    },
+    "index.ts": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 89,
+      "size": 2604
+    },
+    "MatchPairsExercise.tsx": {
+      "hasMemo": true,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": true,
+      "lines": 403,
+      "size": 12845
+    },
+    "MultipleChoiceExercise.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": true,
+      "lines": 223,
+      "size": 6778
+    },
+    "FirebaseStatusMonitor.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 311,
+      "size": 8395
+    },
+    "GreetingsExercises.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 785,
+      "size": 21846
+    },
+    "GreetingsLessonScreen.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 456,
+      "size": 12495
+    },
+    "GreetingsModuleScreen.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 460,
+      "size": 13003
+    },
+    "Header.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 222,
+      "size": 5090
+    },
+    "Icon.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 122,
+      "size": 1987
+    },
+    "ImmersiveMode.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 730,
+      "size": 22739
+    },
+    "Input.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 236,
+      "size": 5832
+    },
+    "LanguageSelector.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 205,
+      "size": 5675
+    },
+    "LazyComponents.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 55,
+      "size": 2674
+    },
+    "LazyLoader.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 47,
+      "size": 1498
+    },
+    "LevelTestComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 6,
+      "size": 22779
+    },
+    "LoadingStates.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 236,
+      "size": 5227
+    },
+    "MainLanguageSelector.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": false,
+      "lines": 269,
+      "size": 7388
+    },
+    "MicroInteractions.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 551,
+      "size": 13288
+    },
+    "MicroInteractionSystem.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 472,
+      "size": 12968
+    },
+    "Modal.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 284,
+      "size": 7548
+    },
+    "OptimizedComponents.tsx": {
+      "hasMemo": true,
+      "hasState": false,
+      "hasEffect": false,
+      "hasCallback": true,
+      "lines": 107,
+      "size": 2848
+    },
+    "OptimizedImage.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": false,
+      "hasCallback": true,
+      "lines": 123,
+      "size": 3104
+    },
+    "PerformanceMonitoringDashboard.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 706,
+      "size": 23894
+    },
+    "PerformanceOptimized.tsx": {
+      "hasMemo": true,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 495,
+      "size": 14363
+    },
+    "ProgressBar.tsx": {
+      "hasMemo": false,
+      "hasState": false,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 58,
+      "size": 1392
+    },
+    "PronunciationFeedback.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 751,
+      "size": 21038
+    },
+    "SecurityMonitoringComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 812,
+      "size": 25103
+    },
+    "SocialFeatures.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 6,
+      "size": 27132
+    },
+    "SRSFlashcardComponent.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": true,
+      "lines": 719,
+      "size": 20302
+    },
+    "STTExample.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 654,
+      "size": 18537
+    },
+    "Toast.tsx": {
+      "hasMemo": false,
+      "hasState": true,
+      "hasEffect": true,
+      "hasCallback": false,
+      "lines": 329,
+      "size": 8567
+    }
+  },
+  "recommendations": [
+    {
+      "category": "Components",
+      "priority": "medium",
+      "title": "32 components need optimization",
+      "description": "Add React.memo to prevent unnecessary re-renders",
+      "action": "Wrap components with React.memo"
+    },
+    {
+      "category": "Dependencies",
+      "priority": "medium",
+      "title": "Heavy dependencies detected",
+      "description": "Consider lazy loading or alternatives",
+      "action": "Implement lazy loading for heavy libraries"
+    }
+  ]
+}

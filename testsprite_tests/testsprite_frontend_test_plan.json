@@ -1,0 +1,480 @@
+[
+  {
+    "id": "TC001",
+    "title": "Email/Password Authentication Success",
+    "description": "Verify user can sign up and sign in using valid email and password credentials.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the sign up page."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid name, email, and password with at least 8 characters."
+      },
+      {
+        "type": "action",
+        "description": "Submit sign up form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify account creation is successful with user data returned."
+      },
+      {
+        "type": "action",
+        "description": "Sign out if signed in automatically."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the sign in page."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid email and password."
+      },
+      {
+        "type": "action",
+        "description": "Submit sign in form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user is signed in and authenticated with valid session token."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Authentication Failure with Incorrect Password",
+    "description": "Verify sign in fails with incorrect password and appropriate error is shown.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the sign in page."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid email and incorrect password."
+      },
+      {
+        "type": "action",
+        "description": "Submit sign in form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sign in fails and error feedback is displayed indicating invalid credentials."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Third-Party Authentication Providers Support",
+    "description": "Verify users can authenticate successfully using Google, Apple, and GitHub providers.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the sign in page."
+      },
+      {
+        "type": "action",
+        "description": "Choose Google authentication."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Google OAuth flow completes and user is signed in."
+      },
+      {
+        "type": "action",
+        "description": "Sign out."
+      },
+      {
+        "type": "action",
+        "description": "Choose Apple authentication."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Apple OAuth flow completes and user is signed in."
+      },
+      {
+        "type": "action",
+        "description": "Sign out."
+      },
+      {
+        "type": "action",
+        "description": "Choose GitHub authentication."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify GitHub OAuth flow completes and user is signed in."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "CEFR-Based Lesson Progression",
+    "description": "Verify lessons are delivered according to selected CEFR level and user unlocks higher levels sequentially.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Select language and initial CEFR level A1."
+      },
+      {
+        "type": "action",
+        "description": "Fetch lessons for level A1."
+      },
+      {
+        "type": "assertion",
+        "description": "Validate lessons correspond to A1 level according to API response."
+      },
+      {
+        "type": "action",
+        "description": "Complete all A1 lessons."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to access A2 lessons."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify A2 lessons are unlocked only after completing A1."
+      },
+      {
+        "type": "action",
+        "description": "Progress through subsequent levels B1, B2, C1, and C2 similarly."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify lesson delivery aligns with user CEFR progression and access restrictions."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Exercise Types Functionality and Validation",
+    "description": "Verify various exercise types (flashcard, multiple choice, fill in the blank, listening, speaking) behave correctly including correct answer validation.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start a lesson containing all exercise types."
+      },
+      {
+        "type": "action",
+        "description": "For flashcard exercises, flip cards and verify content visibility."
+      },
+      {
+        "type": "assertion",
+        "description": "Flashcard shows expected question and answer."
+      },
+      {
+        "type": "action",
+        "description": "For multiple choice exercises, select correct and incorrect options."
+      },
+      {
+        "type": "assertion",
+        "description": "Correct answers are accepted; incorrect answers prompt retry or feedback."
+      },
+      {
+        "type": "action",
+        "description": "For fill in the blank exercises, enter correct and incorrect answers."
+      },
+      {
+        "type": "assertion",
+        "description": "System validates input and provides appropriate feedback."
+      },
+      {
+        "type": "action",
+        "description": "For listening exercises, play audio and answer questions accordingly."
+      },
+      {
+        "type": "assertion",
+        "description": "Audio plays correctly; answers validated properly."
+      },
+      {
+        "type": "action",
+        "description": "For speaking exercises, provide voice input."
+      },
+      {
+        "type": "assertion",
+        "description": "Speech recognition converts voice accurately and evaluates correctness."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "XP, Hearts, Streaks and Achievements Tracking",
+    "description": "Verify that XP is awarded properly, streaks increment correctly, hearts are decremented on failures, and achievements unlock appropriately based on user progress.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Complete a lesson successfully."
+      },
+      {
+        "type": "assertion",
+        "description": "XP increases by lesson indicated xpReward value."
+      },
+      {
+        "type": "action",
+        "description": "Complete consecutive days of lessons to build streak."
+      },
+      {
+        "type": "assertion",
+        "description": "Streak count increments correctly per day."
+      },
+      {
+        "type": "action",
+        "description": "Fail an exercise that consumes a heart."
+      },
+      {
+        "type": "assertion",
+        "description": "Number of hearts decreases by one."
+      },
+      {
+        "type": "action",
+        "description": "Achieve predefined milestones to unlock achievements."
+      },
+      {
+        "type": "assertion",
+        "description": "Achievements appear unlocked in user profile and gamification state."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Offline Learning and Data Synchronization",
+    "description": "Verify user can access lessons offline, make progress offline, and synchronization with cloud occurs correctly when back online, no data loss occurs.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Switch user device to offline mode."
+      },
+      {
+        "type": "action",
+        "description": "Access available lessons and complete exercises offline."
+      },
+      {
+        "type": "assertion",
+        "description": "Lessons and exercises load correctly from local SQLite storage."
+      },
+      {
+        "type": "action",
+        "description": "Complete lessons and record XP and progress offline."
+      },
+      {
+        "type": "action",
+        "description": "Switch device back online."
+      },
+      {
+        "type": "action",
+        "description": "Trigger data synchronization manually or wait for automatic sync."
+      },
+      {
+        "type": "assertion",
+        "description": "Offline progress, XP, hearts, and streak data sync correctly with Firebase Firestore without data loss or duplication."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Speech Recognition Accuracy and Feedback",
+    "description": "Verify speech-to-text converts user speech input accurately and provides realtime feedback for pronunciation practice including confidence scoring.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start a speaking exercise requiring user to say a word or phrase."
+      },
+      {
+        "type": "action",
+        "description": "Speak the phrase clearly in the target language."
+      },
+      {
+        "type": "assertion",
+        "description": "Recognized text matches expected phrase with high confidence."
+      },
+      {
+        "type": "assertion",
+        "description": "Pronunciation feedback component displays correct information based on confidence."
+      },
+      {
+        "type": "action",
+        "description": "Speak incorrectly or unclearly."
+      },
+      {
+        "type": "assertion",
+        "description": "System detects mismatch and provides appropriate corrective feedback."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Text-To-Speech Synthesis for Listening Exercises",
+    "description": "Verify text-to-speech API generates audio correctly for given text and chosen language and voice, plays audio during listening exercises.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start a listening exercise with synthesized speech."
+      },
+      {
+        "type": "action",
+        "description": "Trigger playing of synthesized audio."
+      },
+      {
+        "type": "assertion",
+        "description": "Audio file URL is returned from synthesis endpoint."
+      },
+      {
+        "type": "assertion",
+        "description": "Audio plays without issues and voice matches selected language and voice settings."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Multi-language Content Rendering",
+    "description": "Verify application supports content rendering and interaction in all six supported languages including English, Spanish, French, Italian, Croatian, and Chinese.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Set main language and target language to each of the six supported languages sequentially."
+      },
+      {
+        "type": "action",
+        "description": "Load lessons and content for each language pairing."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI text, lesson content, and vocabulary display correctly in selected languages."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify glyphs, accents, and special characters display without encoding issues."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text input fields accept appropriate characters for language."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Error Reporting and Handling on API Failures",
+    "description": "Verify application properly handles API errors, reports errors using centralized error service, and displays user-friendly error feedback.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate backend API failures for authentication, lessons, or gamification endpoints."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify errors are caught by centralized error service."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error details including stack trace and context are reported to error analytics dashboard."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user is shown appropriate error messages without app crash."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Performance Monitoring and Responsive UI under Load",
+    "description": "Validate backend API responsiveness and scalability; verify UI remains responsive and user receives timely feedback under normal and peak loads.",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Generate load test traffic simulating multiple concurrent users calling key endpoints."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify API response times are within SLA limits with no critical errors."
+      },
+      {
+        "type": "action",
+        "description": "Use application UI to perform normal user flows during peak load."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI updates reliably and promptly; no timeouts or freezes occur."
+      },
+      {
+        "type": "action",
+        "description": "Verify performance metrics appear correctly in analytics dashboard."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "User Data Backup Creation",
+    "description": "Verify user can initiate data backup successfully and backup is stored and accessible.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Trigger data backup process via settings or automated flow."
+      },
+      {
+        "type": "assertion",
+        "description": "Backup creation endpoint returns success."
+      },
+      {
+        "type": "assertion",
+        "description": "Backup data is accessible and contains expected user progress and settings."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Language Settings Update",
+    "description": "Verify user can update main and target languages and preferences for translations and phonetics, and settings persist correctly.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to language settings."
+      },
+      {
+        "type": "action",
+        "description": "Change main language, target language, toggle translation and phonetic display options."
+      },
+      {
+        "type": "action",
+        "description": "Save updated language settings."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify backend API accepts and saves the settings without error."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify application reflects updated language preferences immediately or on next load."
+      }
+    ]
+  }
+]

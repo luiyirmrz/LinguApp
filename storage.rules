@@ -1,0 +1,115 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        request.auth.token.admin == true;
+    }
+    
+    function isValidImage() {
+      return request.resource.contentType.matches('image/.*') &&
+        request.resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+    
+    function isValidAudio() {
+      return request.resource.contentType.matches('audio/.*') &&
+        request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+    
+    // User profile images
+    match /users/{userId}/profile/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) && isValidImage();
+      allow delete: if isOwner(userId);
+    }
+    
+    // User audio recordings (pronunciation practice)
+    match /users/{userId}/audio/{allPaths=**} {
+      allow read, write, delete: if isOwner(userId) && isValidAudio();
+    }
+    
+    // User documents and files
+    match /users/{userId}/documents/{allPaths=**} {
+      allow read, write, delete: if isOwner(userId);
+    }
+    
+    // Public content (read-only for authenticated users)
+    match /content/images/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidImage();
+    }
+    
+    match /content/audio/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidAudio();
+    }
+    
+    match /content/documents/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Lesson content
+    match /lessons/{lessonId}/images/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidImage();
+    }
+    
+    match /lessons/{lessonId}/audio/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidAudio();
+    }
+    
+    // Vocabulary content
+    match /vocabulary/{vocabId}/images/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidImage();
+    }
+    
+    match /vocabulary/{vocabId}/audio/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidAudio();
+    }
+    
+    // Language-specific content
+    match /languages/{languageId}/content/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // System assets (admin only)
+    match /system/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Temporary uploads (auto-delete after processing)
+    match /temp/{userId}/{allPaths=**} {
+      allow read, write, delete: if isOwner(userId);
+    }
+    
+    // Backup and export files
+    match /backups/{userId}/{allPaths=**} {
+      allow read, write, delete: if isOwner(userId);
+    }
+    
+    // Error logs and debugging files (admin only)
+    match /logs/{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Default deny rule for any unmatched paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

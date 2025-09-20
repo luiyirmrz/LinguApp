@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TC001",
+    "title": "signin with email and password",
+    "description": "Verify that the /auth/signin endpoint successfully authenticates a user with valid email and password credentials and returns the user object and authentication token."
+  },
+  {
+    "id": "TC002",
+    "title": "create new user account",
+    "description": "Verify that the /auth/signup endpoint creates a new user account when provided with valid name, email, and password, and returns appropriate success response."
+  },
+  {
+    "id": "TC003",
+    "title": "get lessons for user",
+    "description": "Verify that the /lessons endpoint returns a list of lessons filtered by optional level and language query parameters, and that the lessons conform to the CEFR levels and language specified."
+  },
+  {
+    "id": "TC004",
+    "title": "start a lesson",
+    "description": "Verify that the /lessons/{lessonId}/start endpoint successfully starts a lesson when provided with a valid lessonId path parameter and returns a success response."
+  },
+  {
+    "id": "TC005",
+    "title": "get user gamification state",
+    "description": "Verify that the /gamification/state endpoint returns the current gamification state of the user including xp, level, streak, hearts, gems, and achievements."
+  },
+  {
+    "id": "TC006",
+    "title": "get user achievements",
+    "description": "Verify that the /gamification/achievements endpoint returns a list of achievements for the user with correct properties including id, name, description, icon, and unlocked status."
+  },
+  {
+    "id": "TC007",
+    "title": "get supported languages",
+    "description": "Verify that the /languages endpoint returns a list of supported languages including English, Spanish, French, Italian, Croatian, and Chinese with correct language properties."
+  },
+  {
+    "id": "TC008",
+    "title": "update user language settings",
+    "description": "Verify that the /user/language-settings endpoint updates the user's language settings when provided with valid mainLanguage, targetLanguage, showTranslations, and showPhonetics in the request body."
+  },
+  {
+    "id": "TC009",
+    "title": "convert speech to text",
+    "description": "Verify that the /speech/recognize endpoint converts uploaded audio speech to text accurately and returns the recognized text along with confidence score."
+  },
+  {
+    "id": "TC010",
+    "title": "convert text to speech",
+    "description": "Verify that the /speech/synthesize endpoint converts provided text to speech audio and returns a valid audio file URL for playback."
+  }
+]

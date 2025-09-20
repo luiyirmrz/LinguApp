@@ -1,0 +1,189 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        request.auth.token.admin == true;
+    }
+    
+    function isValidUser() {
+      return isAuthenticated() && 
+        request.auth.token.email_verified == true;
+    }
+    
+    // Users collection - users can read/write their own data
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      allow create: if isAuthenticated() && 
+        request.resource.data.id == request.auth.uid;
+    }
+    
+    // User progress data - private to each user
+    match /userProgress/{userId}/{document=**} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // SRS (Spaced Repetition System) items - user-specific
+    match /srsItems/{itemId} {
+      allow read, write: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+    }
+    
+    // User analytics - users can write their own analytics
+    match /analytics/{analyticsId} {
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+    }
+    
+    // User reviews and ratings
+    match /reviews/{reviewId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+    }
+    
+    // Challenges - users can read/write challenges they're part of
+    match /challenges/{challengeId} {
+      allow read: if isAuthenticated() && 
+        (resource.data.challengerId == request.auth.uid || 
+         resource.data.challengedId == request.auth.uid ||
+         resource.data.participants[request.auth.uid] != null);
+      allow create: if isAuthenticated() && 
+        request.resource.data.challengerId == request.auth.uid;
+      allow update: if isAuthenticated() && 
+        (resource.data.challengerId == request.auth.uid || 
+         resource.data.challengedId == request.auth.uid);
+    }
+    
+    // Leaderboards - read-only for authenticated users
+    match /leaderboards/{leaderboardId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin(); // Only admins can update leaderboards
+    }
+    
+    // User achievements
+    match /achievements/{userId}/{document=**} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // User streaks and statistics
+    match /userStats/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // User settings and preferences
+    match /userSettings/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // User learning sessions
+    match /sessions/{sessionId} {
+      allow read, write: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+    }
+    
+    // User lesson progress
+    match /lessonProgress/{userId}/{document=**} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // User vocabulary progress
+    match /vocabularyProgress/{userId}/{document=**} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // Public content collections (read-only for authenticated users)
+    match /lessons/{lessonId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /vocabulary/{vocabId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /languages/{languageId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /skills/{skillId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /exercises/{exerciseId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // System configuration (admin only)
+    match /config/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Error logs and monitoring (admin only)
+    match /errorLogs/{logId} {
+      allow read, write: if isAdmin();
+    }
+    
+    // User feedback and support tickets
+    match /feedback/{feedbackId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid;
+    }
+    
+    // Social features
+    match /friends/{userId}/{document=**} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    match /groups/{groupId} {
+      allow read: if isAuthenticated() && 
+        resource.data.members[request.auth.uid] != null;
+      allow create: if isAuthenticated() && 
+        request.resource.data.creatorId == request.auth.uid;
+      allow update: if isAuthenticated() && 
+        (resource.data.creatorId == request.auth.uid ||
+         resource.data.moderators[request.auth.uid] != null);
+    }
+    
+    // Messages (if messaging is enabled)
+    match /messages/{messageId} {
+      allow read, write: if isAuthenticated() && 
+        (resource.data.senderId == request.auth.uid ||
+         resource.data.recipientId == request.auth.uid);
+      allow create: if isAuthenticated() && 
+        request.resource.data.senderId == request.auth.uid;
+    }
+    
+    // Default deny rule for any unmatched paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
