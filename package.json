@@ -11,7 +11,7 @@
     "start-web-local": "bunx rork start -p 87juor6a61cmt59y3pxiy --web",
     "start-backend": "tsx backend/server.ts",
     "dev": "concurrently \"npm run start-backend\" \"npm run start-web-local\"",
-    "build": "expo export --platform web",
+    "build": "expo export --platform web && node scripts/copy-web-assets.js",
     "build:analyze": "node scripts/analyze-bundle.js analyze",
     "build:report": "node scripts/analyze-bundle.js report",
     "optimize": "npm run build && npm run build:analyze",

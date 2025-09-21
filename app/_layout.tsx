@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, Suspense, memo, useMemo, lazy } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Platform, View, Text, ActivityIndicator } from 'react-native';
+// import { useFonts } from 'expo-font'; // Removed to fix compilation error
 import { LoadingSpinner } from '@/components';
 import { UnifiedAuthProvider } from '@/hooks/useUnifiedAuth';
 import { AccessibilityProvider } from '@/components/AccessibilityProvider';
@@ -58,6 +59,8 @@ const RootLayoutNav = memo(() => {
 RootLayoutNav.displayName = 'RootLayoutNav';
 
 export default function RootLayout() {
+  // Fonts will be loaded via web CSS instead of local files
+
   useEffect(() => {
     SplashScreen.hideAsync();
     
@@ -66,6 +69,12 @@ export default function RootLayout() {
     
     // Fix for Expo Router "operation is insecure" error on web
     if (Platform.OS === 'web' && typeof window !== 'undefined') {
+      // Load web-specific styles
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/web-styles.css';
+      document.head.appendChild(link);
+      
       // Override history methods to handle security issues
       const originalReplaceState = window.history.replaceState;
       const originalPushState = window.history.pushState;

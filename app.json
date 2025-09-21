@@ -56,7 +56,19 @@
     "web": {
       "favicon": "./assets/images/favicon.png",
       "bundler": "metro",
-      "output": "static"
+      "output": "static",
+      "name": "LinguApp",
+      "shortName": "LinguApp",
+      "lang": "en",
+      "scope": "/",
+      "themeColor": "#58CC02",
+      "description": "Learn languages with interactive lessons and spaced repetition",
+      "dir": "ltr",
+      "display": "standalone",
+      "orientation": "portrait-primary",
+      "startUrl": "/",
+      "backgroundColor": "#ffffff",
+      "statusBarStyle": "default"
     },
     "plugins": [
       "expo-router",

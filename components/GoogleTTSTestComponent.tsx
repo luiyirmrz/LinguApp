@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { theme } from '@/constants/theme';
-import { googleTTSConfig, testGoogleTTS } from '@/services/audio/googleTTSConfig';
+// Removed Google TTS imports - using ElevenLabs only
 import { unifiedAudioService } from '@/services/audio/unifiedAudioService';
 import { Play, Volume2, CheckCircle, XCircle } from '@/components/icons/LucideReplacement';
 
@@ -130,8 +130,26 @@ export default function GoogleTTSTestComponent() {
 
   const testAPIConnectivity = async () => {
     try {
-      // Test ElevenLabs API connectivity
+      setApiStatus('unknown');
+      console.log('[TEST] Starting API connectivity test...');
+      
+      // Check if API key is configured
+      const apiKey = process.env.EXPO_PUBLIC_ELEVENLABS_API_KEY;
+      if (!apiKey || apiKey === 'test_key_placeholder') {
+        setApiStatus('failed');
+        Alert.alert(
+          'API Key Not Configured',
+          'Please configure your ElevenLabs API key in the .env file:\n\nEXPO_PUBLIC_ELEVENLABS_API_KEY=your_actual_api_key_here',
+        );
+        return;
+      }
+      
+      console.log('[TEST] API Key found, testing connectivity...');
+      
+      // Test ElevenLabs API connectivity directly
       const { synthesizeSpeech } = await import('@/services/audio/elevenLabsService');
+      console.log('[TEST] ElevenLabs service imported successfully');
+      
       const result = await synthesizeSpeech('Hello, this is a connectivity test.', {
         voiceId: 'pNInz6obpgDQGcFmaJgB',
         voiceSettings: {
@@ -140,16 +158,37 @@ export default function GoogleTTSTestComponent() {
         }
       });
       
+      console.log('[TEST] ElevenLabs API result:', result);
+      
       const isWorking = result.success;
       setApiStatus(isWorking ? 'working' : 'failed');
       
       Alert.alert(
-        'API Test',
-        isWorking ? 'ElevenLabs API is working!' : 'ElevenLabs API failed to respond',
+        'API Test Result',
+        isWorking 
+          ? `✅ ElevenLabs API is working!\n\nAudio URL: ${result.audioUrl ? 'Generated successfully' : 'Not generated'}\nMethod: ${result.method || 'elevenlabs'}`
+          : `❌ ElevenLabs API failed\n\nError: ${result.error || 'Unknown error'}\n\nPlease check:\n1. API key is valid\n2. Internet connection\n3. ElevenLabs service status`,
       );
     } catch (error) {
       setApiStatus('failed');
-      Alert.alert('API Test Failed', error instanceof Error ? error.message : 'Unknown error');
+      console.error('[TEST] API Test Error:', error);
+      
+      let errorMessage = 'Unknown error';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+        if (errorMessage.includes('fetch')) {
+          errorMessage = 'Network error - check internet connection';
+        } else if (errorMessage.includes('401') || errorMessage.includes('Unauthorized')) {
+          errorMessage = 'Invalid API key - please check your ElevenLabs API key';
+        } else if (errorMessage.includes('403') || errorMessage.includes('Forbidden')) {
+          errorMessage = 'API key access denied - check your ElevenLabs permissions';
+        }
+      }
+      
+      Alert.alert(
+        'API Test Failed', 
+        `❌ Connection failed\n\nError: ${errorMessage}\n\nTroubleshooting:\n1. Verify API key is correct\n2. Check internet connection\n3. Ensure ElevenLabs service is available`
+      );
     }
   };
 
@@ -174,7 +213,7 @@ export default function GoogleTTSTestComponent() {
       <View style={styles.header}>
         <Text style={styles.title}>ElevenLabs Integration Test</Text>
         <Text style={styles.subtitle}>
-          API Key: d4038362dafa2d9c335d70b38404028fdd8deba208792cc45abed4a4f0f7bfec
+          API Key: [CONFIGURED] (Hidden for security)
         </Text>
         
         <View style={[styles.statusBadge, { backgroundColor: `${getStatusColor()  }20` }]}>

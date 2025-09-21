@@ -1,0 +1,436 @@
+/* Web-specific styles for LinguApp */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Reset and base styles for web */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #ffffff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Fix for React Native Web components */
+div[data-testid="expo-router-view"] {
+  height: 100%;
+  width: 100%;
+}
+
+/* React Native Web specific fixes */
+div[style*="flexDirection: row"] {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+div[style*="flexDirection: column"] {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+div[style*="justifyContent: space-between"] {
+  justify-content: space-between !important;
+}
+
+div[style*="alignItems: center"] {
+  align-items: center !important;
+}
+
+/* Improve text rendering */
+span, div, p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Better button styling */
+button, [role="button"] {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Improve touch targets */
+[data-testid="touchable-opacity"] {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tab navigation styles for web */
+[data-testid="expo-router-tabs"] {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+[data-testid="expo-router-tabs-content"] {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 80px; /* Space for fixed tab bar */
+  background-color: #f8f9fa;
+}
+
+[data-testid="expo-router-tabs-tab-bar"] {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e5e5;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* Responsive design for different screen sizes */
+@media (min-width: 768px) {
+  [data-testid="expo-router-tabs"] {
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  [data-testid="expo-router-tabs-tab-bar"] {
+    position: relative;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-testid="expo-router-tabs"] {
+    max-width: 1000px;
+  }
+}
+
+/* Fix for SafeAreaView on web */
+[data-testid="safe-area-view"] {
+  height: 100%;
+  width: 100%;
+}
+
+/* ScrollView fixes for web */
+[data-testid="scroll-view"] {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for LinearGradient on web */
+[data-testid="linear-gradient"] {
+  background: linear-gradient(135deg, #58CC02 0%, #1CB0F6 100%);
+}
+
+/* Card and surface styling */
+[data-testid="card"], [data-testid="surface"] {
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e5e5;
+}
+
+/* Button styling for web */
+[data-testid="touchable-opacity"] {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+[data-testid="touchable-opacity"]:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+[data-testid="touchable-opacity"]:active {
+  transform: translateY(0);
+}
+
+/* Text styling improvements */
+[data-testid="text"] {
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+/* Progress bar styling */
+[data-testid="progress-bar"] {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+[data-testid="progress-fill"] {
+  background-color: #ffffff;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Icon styling */
+[data-testid="icon"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Header styling */
+[data-testid="header"] {
+  background: linear-gradient(135deg, #58CC02 0%, #1CB0F6 100%);
+  color: white;
+  padding: 20px 24px;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(88, 204, 2, 0.2);
+}
+
+/* Stats container styling */
+[data-testid="stats-container"] {
+  display: flex;
+  gap: 16px;
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+
+[data-testid="stat-card"] {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 20px 16px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+[data-testid="stat-card"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Level card styling */
+[data-testid="level-card"] {
+  margin: 0 24px 24px 24px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #58CC02 0%, #1CB0F6 100%);
+  color: white;
+  padding: 28px 24px;
+  box-shadow: 0 8px 32px rgba(88, 204, 2, 0.3);
+  position: relative;
+}
+
+[data-testid="level-card"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  pointer-events: none;
+}
+
+/* Language section styling */
+[data-testid="language-section"] {
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+
+[data-testid="current-language"] {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+[data-testid="current-language"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Skills section styling */
+[data-testid="skills-section"] {
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+
+[data-testid="skill-card"] {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+[data-testid="skill-card"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+[data-testid="skill-card"]:last-child {
+  margin-bottom: 0;
+}
+
+/* Quick actions styling */
+[data-testid="quick-actions"] {
+  padding: 0 24px;
+  margin-bottom: 32px;
+}
+
+[data-testid="actions-grid"] {
+  display: flex;
+  gap: 16px;
+}
+
+[data-testid="action-card"] {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+[data-testid="action-card"]:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Text styling improvements */
+[data-testid="text"] {
+  font-family: inherit;
+  line-height: 1.5;
+  color: #2b2b2b;
+}
+
+/* Section titles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #2b2b2b;
+  margin-bottom: 16px;
+}
+
+/* Progress bar styling */
+[data-testid="progress-bar"] {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 8px;
+}
+
+[data-testid="progress-fill"] {
+  background-color: #58CC02;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  height: 100%;
+}
+
+/* Icon styling */
+[data-testid="icon"] {
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+}
+
+/* Loading states */
+[data-testid="loading-spinner"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Error states */
+[data-testid="error-boundary"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 24px;
+  text-align: center;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  [data-testid="card"], [data-testid="surface"], [data-testid="stat-card"], 
+  [data-testid="skill-card"], [data-testid="action-card"], [data-testid="current-language"] {
+    border: 2px solid #000000;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  [data-testid="expo-router-tabs-tab-bar"] {
+    background-color: #2b2b2b;
+    border-top-color: #404040;
+  }
+  
+  [data-testid="card"], [data-testid="surface"], [data-testid="stat-card"], 
+  [data-testid="skill-card"], [data-testid="action-card"], [data-testid="current-language"] {
+    background-color: #2b2b2b;
+    border-color: #404040;
+    color: #ffffff;
+  }
+  
+  [data-testid="action-card"]:hover {
+    background-color: #404040;
+  }
+}
+
+/* Print styles */
+@media print {
+  [data-testid="expo-router-tabs-tab-bar"] {
+    display: none;
+  }
+  
+  [data-testid="expo-router-tabs"] {
+    box-shadow: none;
+  }
+}

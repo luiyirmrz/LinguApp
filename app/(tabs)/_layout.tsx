@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Home, User, Trophy, ShoppingBag } from '@/components/icons/LucideReplacement';
+import { Home, User, Trophy, ShoppingBag, ChevronDown } from '@/components/icons/LucideReplacement';
 import React from 'react';
 import { theme } from '@/constants/theme';
 
@@ -43,6 +43,13 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <User size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="home-optimized"
+        options={{
+          title: 'home-optimized',
+          tabBarIcon: ({ color }) => <ChevronDown size={24} color={color} />,
         }}
       />
     </Tabs>

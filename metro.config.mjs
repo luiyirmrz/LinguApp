@@ -26,4 +26,10 @@ config.resolver.assetExts.push(
 // Fix for missing-asset-registry-path
 config.transformer.assetRegistryPath = '@react-native/assets-registry/registry';
 
+// Ignore non-existent directories
+config.watchFolders = [];
+config.resolver.blockList = [
+  /.*\/images\/.*/,
+];
+
 export default config;
