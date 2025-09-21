@@ -1,3 +1,25 @@
+# Security Policy
+
+## Supported Versions
+
+Use this section to tell people about which versions of your project are
+currently being supported with security updates.
+
+| Version | Supported          |
+| ------- | ------------------ |
+| 5.1.x   | :white_check_mark: |
+| 5.0.x   | :x:                |
+| 4.0.x   | :white_check_mark: |
+| < 4.0   | :x:                |
+
+## Reporting a Vulnerability
+
+Use this section to tell people how to report a vulnerability.
+
+Tell them where to go, how often they can expect to get an update on a
+reported vulnerability, what to expect if the vulnerability is accepted or
+declined, etc.
+>>>>>>> 6c1cb96ddd36c64e188feaca5be4175690dce47f
 # Security Guide: Environment Variables & API Keys
 
 ## 🚨 CRITICAL SECURITY FIXES APPLIED
@@ -245,6 +267,51 @@ For security-related issues:
 - Ensure all environment variables are properly configured
 - Test in development before deploying to production
 
+## 🔄 Supported Versions
+
+This security guide applies to all current versions of LinguApp. For version-specific security updates:
+
+| Version | Security Support   |
+| ------- | ------------------ |
+| Latest  | :white_check_mark: |
+| 1.x.x   | :white_check_mark: |
+| Beta    | :white_check_mark: |
+
+## 🚨 Reporting Security Vulnerabilities
+
+If you discover a security vulnerability in LinguApp:
+
+1. **Do NOT create a public issue**
+2. **Email security concerns** to the project maintainers
+3. **Include detailed information** about the vulnerability
+4. **Wait for confirmation** before public disclosure
+5. **Expect updates** within 48 hours of reporting
+
+We take security seriously and will work quickly to address any verified vulnerabilities.
+
 ---
 
 **Remember**: Security is not a one-time setup but an ongoing process. Regular reviews and updates are essential to maintain the security of your application.
+=======
+# Security Policy
+
+## Supported Versions
+
+Use this section to tell people about which versions of your project are
+currently being supported with security updates.
+
+| Version | Supported          |
+| ------- | ------------------ |
+| 5.1.x   | :white_check_mark: |
+| 5.0.x   | :x:                |
+| 4.0.x   | :white_check_mark: |
+| < 4.0   | :x:                |
+
+## Reporting a Vulnerability
+
+Use this section to tell people how to report a vulnerability.
+
+Tell them where to go, how often they can expect to get an update on a
+reported vulnerability, what to expect if the vulnerability is accepted or
+declined, etc.
+>>>>>>> 6c1cb96ddd36c64e188feaca5be4175690dce47f
