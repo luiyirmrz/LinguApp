@@ -5,10 +5,14 @@
  * Run with: node scripts/setup-env.js
  */
 
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
-const crypto = require('crypto');
+import fs from 'fs';
+import path from 'path';
+import readline from 'readline';
+import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -151,7 +155,10 @@ async function setupEnvironment() {
     
     // Run validation
     try {
-      require('./validate-env.js');
+      const { default: validateEnv } = await import('./validate-env.js');
+      if (validateEnv) {
+        await validateEnv();
+      }
     } catch (error) {
       colorLog('⚠️  Validation script not found, but .env file was created successfully.', 'yellow');
     }
@@ -184,11 +191,11 @@ process.on('SIGINT', () => {
 });
 
 // Main execution
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   setupEnvironment().catch(error => {
     colorLog(`\n❌ Unexpected error: ${error.message}`, 'red');
     process.exit(1);
   });
 }
 
-module.exports = { setupEnvironment };
+export { setupEnvironment };

@@ -52,6 +52,30 @@ This document outlines the security vulnerabilities that have been fixed and pro
 - **Fix**: Implemented cryptographically secure JWT tokens with HMAC signatures
 - **Security Impact**: Prevents authentication bypass, session hijacking, and token prediction
 
+### 5. **Inadequate Rate Limiting Configuration** (HIGH)
+- **File**: `backend/middleware/rateLimiter.ts`
+- **Issue**: Too permissive rate limits (5 auth attempts/15min, 100 requests/15min)
+- **Fix**: Reduced to 3 auth attempts/15min, 50 general requests/15min, added progressive lockout
+- **Security Impact**: Better protection against brute force attacks and DDoS
+
+### 6. **CORS Configuration Security Gaps** (HIGH)
+- **File**: `backend/middleware/securityMiddleware.ts:124-144`
+- **Issue**: Overly permissive CORS allowing any origin when no origin header present
+- **Fix**: Strict origin validation, reject requests without origin headers
+- **Security Impact**: Prevents cross-origin attacks and unauthorized API access
+
+### 7. **Insufficient Input Validation** (HIGH)
+- **Files**: Multiple validation services across the application
+- **Issue**: Missing validation on endpoints, potential injection vulnerabilities
+- **Fix**: Comprehensive input validation middleware with SQL/XSS/Command injection protection
+- **Security Impact**: Prevents injection attacks and data breaches
+
+### 8. **Incomplete Security Headers** (HIGH)
+- **File**: `backend/middleware/securityMiddleware.ts:33-43`
+- **Issue**: Missing critical security headers (CSP, HSTS, etc.)
+- **Fix**: Comprehensive security headers including CSP, HSTS, CORP, COOP, and more
+- **Security Impact**: Prevents XSS attacks, clickjacking, and insecure transport
+
 ## 🔧 Environment Variables Setup
 
 ### Step 1: Create Your .env File
@@ -89,6 +113,12 @@ BACKEND_DEMO_PASSWORD=SecureDemoPassword123!
 # JWT Secret (CRITICAL - minimum 32 characters)
 # Generate with: openssl rand -base64 32 or node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 JWT_SECRET=your_cryptographically_secure_jwt_secret_32_chars_minimum
+
+# CORS Configuration (Production Security)
+FRONTEND_URL=http://localhost:3000
+FRONTEND_URL_DEV=http://localhost:3001  
+FRONTEND_URL_STAGING=https://staging.yourdomain.com
+FRONTEND_URL_PRODUCTION=https://yourdomain.com
 ```
 
 ### Step 3: Verify Configuration
@@ -125,7 +155,63 @@ Look for initialization messages:
    - Monitor usage for suspicious activity
    - Revoke old keys after rotation
 
-### API Key Management
+### 1. **Hardened Rate Limiting**
+
+- **Authentication**: 3 attempts per 15 minutes (reduced from 5)
+- **Signup**: 2 attempts per hour (reduced from 3)
+- **General API**: 50 requests per 15 minutes (reduced from 100)
+- **Progressive Lockout**: Automatic escalation for repeat violations
+  - 3-5 violations: 15 minutes lockout
+  - 6-10 violations: 1 hour lockout  
+  - 11-20 violations: 6 hours lockout
+  - 20+ violations: 24 hours lockout
+
+### 2. **Strict CORS Configuration**
+
+- **No Origin Rejection**: Requests without origin headers are blocked
+- **Environment-Based Origins**: Only configured domains allowed
+- **Credential Protection**: Secure credential handling with strict validation
+- **Method Restriction**: Only specified HTTP methods allowed
+- **Header Limitation**: Restricted allowed and exposed headers
+
+### 3. **Enhanced Security Headers**
+
+- **Content Security Policy (CSP)**: Prevents XSS and injection attacks
+- **Strict Transport Security**: Forces HTTPS in production
+- **X-Frame-Options**: Prevents clickjacking
+- **Content Type Validation**: Ensures proper request formats
+- **Request Size Limits**: Reduced to 512KB (from 1MB)
+
+### 4. **Progressive Security Monitoring**
+
+- **IP Violation Tracking**: Persistent violation counting
+- **Automatic Escalation**: Progressive penalties for abuse
+- **Security Logging**: Comprehensive audit trail
+- **Request Timeout**: 30-second timeout protection
+
+### 5. **Comprehensive Input Validation & Injection Protection**
+
+- **SQL Injection Protection**: Pattern detection for UNION, SELECT, INSERT, etc.
+- **XSS Prevention**: Script tag removal, event handler filtering, protocol blocking
+- **Command Injection Protection**: Shell metacharacter filtering and path traversal prevention
+- **NoSQL Injection Protection**: MongoDB operator detection and blocking
+- **Content Sanitization**: HTML tag filtering, dangerous character removal
+- **File Upload Validation**: Type checking, size limits, filename sanitization
+- **Real-time Scanning**: Security middleware scans all requests for attack patterns
+- **Zod Schema Validation**: Type-safe validation with comprehensive error handling
+
+### 6. **Enhanced Security Headers**
+
+- **Content Security Policy (CSP)**: Comprehensive directive set preventing XSS
+- **Strict Transport Security (HSTS)**: 2-year HTTPS enforcement with preload
+- **Cross-Origin Policies**: CORP, COOP, COEP for isolation
+- **X-Frame-Options**: DENY to prevent clickjacking
+- **X-Content-Type-Options**: nosniff to prevent MIME confusion
+- **Permissions Policy**: Disabled dangerous browser features
+- **Cache Control**: Prevents sensitive data caching
+- **Server Header Removal**: Eliminates server fingerprinting
+
+### 7. **API Key Management**
 
 1. **ElevenLabs API Keys**
    - Get your key from: https://elevenlabs.io/
@@ -236,14 +322,26 @@ The validation script will check:
 - [ ] Removed all hard-coded API keys
 - [ ] Removed all hard-coded test credentials
 - [ ] Replaced insecure JWT token generation with cryptographically secure tokens
+- [ ] **Hardened rate limiting configuration (3 auth attempts, 50 general requests)**
+- [ ] **Fixed CORS security gaps (strict origin validation)**
+- [ ] **Implemented progressive lockout mechanisms**
+- [ ] **Added enhanced security headers (CSP, HSTS, CORP, COOP, etc.)**
+- [ ] **Implemented comprehensive input validation (SQL/XSS/Command injection protection)**
+- [ ] **Added security scanning middleware for attack detection**
+- [ ] **Enhanced XSS protection and content sanitization**
 - [ ] Created .env file with actual values
 - [ ] Generated secure JWT secret (minimum 32 characters)
+- [ ] **Configured CORS origins for all environments**
 - [ ] Added .env to .gitignore
 - [ ] Set up production environment variables
 - [ ] Configured monitoring and alerts
 - [ ] Set up key rotation schedule
 - [ ] Tested all services with new configuration
 - [ ] Validated JWT token generation and verification
+- [ ] **Tested rate limiting and lockout mechanisms**
+- [ ] **Verified CORS configuration in all environments**
+- [ ] **Tested input validation on all endpoints**
+- [ ] **Verified security headers are properly applied**
 - [ ] Documented access credentials securely
 - [ ] Set up backup access method
 - [ ] Ran environment validation script

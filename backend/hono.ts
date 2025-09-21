@@ -14,8 +14,15 @@ import {
   requestLogger, 
   ipFilter, 
   requestSizeLimit,
-  secureCorsOptions, 
+  secureCorsOptions,
+  validateContentType,
+  requestTimeout,
 } from './middleware/securityMiddleware';
+import { 
+  validateAuthRequest,
+  validateSignupRequest,
+  securityScan,
+} from './middleware/inputValidationMiddleware';
 import { createAuthResult } from '../utils/auth';
 
 // app will be mounted at /api
@@ -26,6 +33,9 @@ app.use('*', securityHeaders());
 app.use('*', requestLogger());
 app.use('*', ipFilter());
 app.use('*', requestSizeLimit());
+app.use('*', validateContentType());
+app.use('*', requestTimeout());
+app.use('*', securityScan()); // Security scanning for all requests
 
 // Enable CORS with security configuration
 app.use('*', cors(secureCorsOptions));
@@ -98,8 +108,18 @@ app.post('/api/auth/signup', async (c) => {
     
     const { name, email, password } = body;
     
-    // Import validation functions
-    const { validateEmail, validatePassword, validateName } = await import('../utils/validation');
+    // Import validation functions for enhanced security
+    const { validateEmail, validatePassword, validateName, sanitizeInput } = await import('../utils/validation');
+    const { detectSQLInjection, detectXSS, detectCommandInjection } = await import('./middleware/inputValidationMiddleware');
+    
+    // Enhanced security checks
+    if (detectSQLInjection(JSON.stringify(body)) || detectXSS(JSON.stringify(body)) || detectCommandInjection(JSON.stringify(body))) {
+      console.warn('[SECURITY] Injection attack detected in signup request');
+      return c.json({
+        success: false,
+        error: 'Security violation detected',
+      }, 403);
+    }
     
     // Validate input
     if (!name || !email || !password) {
@@ -110,8 +130,11 @@ app.post('/api/auth/signup', async (c) => {
       }, 400);
     }
     
-    // Validate email
+    // Validate and sanitize inputs
     const emailValidation = validateEmail(email);
+    const passwordValidation = validatePassword(password);
+    const nameValidation = validateName(name);
+    
     if (!emailValidation.isValid) {
       return c.json({
         success: false,
@@ -120,8 +143,6 @@ app.post('/api/auth/signup', async (c) => {
       }, 400);
     }
 
-    // Validate password
-    const passwordValidation = validatePassword(password);
     if (!passwordValidation.isValid) {
       return c.json({
         success: false,
@@ -130,8 +151,6 @@ app.post('/api/auth/signup', async (c) => {
       }, 400);
     }
 
-    // Validate name
-    const nameValidation = validateName(name);
     if (!nameValidation.isValid) {
       return c.json({
         success: false,
@@ -140,12 +159,11 @@ app.post('/api/auth/signup', async (c) => {
       }, 400);
     }
 
-    // Additional security checks
+    // Use sanitized values
     const sanitizedEmail = emailValidation.sanitizedValue!;
     const sanitizedName = nameValidation.sanitizedValue!;
-
+    
     // Check for duplicate email (in a real app, this would check the database)
-    // Use environment variable for test email to avoid hardcoding
     const testEmail = process.env.BACKEND_TEST_EMAIL_1 || 'configured@example.com';
     if (sanitizedEmail === testEmail) {
       return c.json({
@@ -155,7 +173,7 @@ app.post('/api/auth/signup', async (c) => {
       }, 409);
     }
 
-    // Simulate user creation with secure token generation
+    // Create user with sanitized data
     const user = {
       id: `user_${Date.now()}_${Math.random().toString(36).substring(2)}`,
       name: sanitizedName,
@@ -198,8 +216,18 @@ app.post('/api/auth/signin', async (c) => {
     
     const { email, password } = body;
     
-    // Import validation functions
-    const { validateEmail } = await import('../utils/validation');
+    // Import validation functions for enhanced security
+    const { validateEmail, sanitizeInput } = await import('../utils/validation');
+    const { detectSQLInjection, detectXSS, detectCommandInjection } = await import('./middleware/inputValidationMiddleware');
+    
+    // Enhanced security checks
+    if (detectSQLInjection(JSON.stringify(body)) || detectXSS(JSON.stringify(body)) || detectCommandInjection(JSON.stringify(body))) {
+      console.warn('[SECURITY] Injection attack detected in signin request');
+      return c.json({
+        success: false,
+        error: 'Security violation detected',
+      }, 403);
+    }
     
     // Validate input
     if (!email || !password) {

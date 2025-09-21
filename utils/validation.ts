@@ -245,16 +245,20 @@ export function validateInput(input: string, type: 'email' | 'password' | 'name'
   }
 }
 
-// Sanitize input to prevent XSS and injection attacks
+// Enhanced sanitize input to prevent XSS and injection attacks
 export function sanitizeInput(input: string): string {
   return input
     .trim()
     .replace(/[<>]/g, '') // Remove angle brackets
-    .replace(/['"]/g, '') // Remove quotes
-    .replace(/[;]/g, '') // Remove semicolons
-    .replace(/[&]/g, '&amp;') // Escape ampersands
+    .replace(/["']/g, '') // Remove quotes
+    .replace(/[;&|`${}[\]]/g, '') // Remove shell metacharacters
     .replace(/javascript:/gi, '') // Remove javascript: protocol
-    .replace(/on\w+=/gi, '') // Remove event handlers
+    .replace(/data:text\/html/gi, '') // Remove data URLs
+    .replace(/on\w+\s*=/gi, '') // Remove event handlers
+    .replace(/expression\s*\(/gi, '') // Remove CSS expressions
+    .replace(/vbscript:/gi, '') // Remove VBScript
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '') // Remove script tags
+    .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '') // Remove iframe tags
     .substring(0, 1000); // Limit length
 }
 
