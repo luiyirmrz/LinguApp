@@ -1,0 +1,250 @@
+# Security Guide: Environment Variables & API Keys
+
+## 🚨 CRITICAL SECURITY FIXES APPLIED
+
+This document outlines the security vulnerabilities that have been fixed and provides guidelines for secure API key management.
+
+## 🔒 Issues Fixed
+
+### 1. **ElevenLabs API Key Exposure** (CRITICAL)
+- **File**: `services/audio/elevenLabsService.ts`
+- **Issue**: Hard-coded API key `0fb1f07e5e709c4161d22a5dd4a77796c8b8ccb2b9a7b46d4974731946186780`
+- **Fix**: Removed hard-coded key, now requires `EXPO_PUBLIC_ELEVENLABS_API_KEY` environment variable
+- **Security Impact**: Prevents unauthorized access to ElevenLabs services and associated costs
+
+### 2. **Google TTS API Key Exposure** (CRITICAL)
+- **File**: `services/audio/googleTTSConfig.ts`
+- **Issue**: Hard-coded API key `AIzaSyAgOFZ9VfrZmvG9TkqCs2WQc8elCqyS6Yo`
+- **Fix**: Removed hard-coded key, now requires `EXPO_PUBLIC_GOOGLE_TTS_API_KEY` environment variable
+- **Security Impact**: Prevents unauthorized access to Google Cloud services and associated costs
+
+### 3. **Test Credentials Exposure** (HIGH)
+- **Files**: `backend/hono.ts`, `backend/trpc/routes/auth/signin.ts`
+- **Issue**: Hard-coded fallback credentials for testing
+- **Fix**: Removed fallback values, now requires proper environment variables
+- **Security Impact**: Prevents predictable test accounts from being exploited
+
+### 4. **Insecure JWT Token Generation** (CRITICAL)
+- **Files**: `backend/hono.ts:235`, `backend/trpc/routes/auth/signin.ts:53`
+- **Issue**: Predictable timestamp-based token generation (`jwt_token_${Date.now()}`)
+- **Fix**: Implemented cryptographically secure JWT tokens with HMAC signatures
+- **Security Impact**: Prevents authentication bypass, session hijacking, and token prediction
+
+## 🔧 Environment Variables Setup
+
+### Step 1: Create Your .env File
+
+```bash
+# Copy the example file
+cp .env.example .env
+```
+
+### Step 2: Configure Required Variables
+
+Edit your `.env` file with your actual values:
+
+```bash
+# Firebase Configuration
+EXPO_PUBLIC_FIREBASE_API_KEY=your_actual_firebase_api_key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+# ElevenLabs TTS Service
+EXPO_PUBLIC_ELEVENLABS_API_KEY=your_elevenlabs_api_key
+
+# Google Cloud TTS
+EXPO_PUBLIC_GOOGLE_TTS_API_KEY=your_google_tts_api_key
+
+# Backend Test Credentials (use secure values)
+BACKEND_TEST_EMAIL_1=secure_test@yourdomain.com
+BACKEND_TEST_PASSWORD_1=SecureTestPassword123!
+BACKEND_DEMO_EMAIL=demo@yourdomain.com
+BACKEND_DEMO_PASSWORD=SecureDemoPassword123!
+
+# JWT Secret (CRITICAL - minimum 32 characters)
+# Generate with: openssl rand -base64 32 or node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+JWT_SECRET=your_cryptographically_secure_jwt_secret_32_chars_minimum
+```
+
+### Step 3: Verify Configuration
+
+Run the application and check the console for configuration status:
+
+```bash
+npm start
+```
+
+Look for initialization messages:
+- `[ElevenLabs] API Key status: LOADED`
+- `[Google TTS] API configuration loaded successfully`
+
+## 🛡️ Security Best Practices
+
+### Environment Variable Security
+
+1. **Never commit .env files** to version control
+   ```bash
+   # Add to .gitignore
+   .env
+   .env.local
+   .env.production
+   ```
+
+2. **Use different keys for different environments**
+   - Development: Limited quotas, restricted access
+   - Staging: Separate keys for testing
+   - Production: Full access, monitoring enabled
+
+3. **Regularly rotate API keys**
+   - Set up calendar reminders (quarterly)
+   - Monitor usage for suspicious activity
+   - Revoke old keys after rotation
+
+### API Key Management
+
+1. **ElevenLabs API Keys**
+   - Get your key from: https://elevenlabs.io/
+   - Monitor usage in the ElevenLabs dashboard
+   - Set usage limits to prevent overcharges
+
+2. **Google Cloud API Keys**
+   - Get your key from: https://console.cloud.google.com/
+   - Enable only required APIs (Text-to-Speech)
+   - Set up quotas and usage alerts
+   - Restrict key usage by IP/domain in production
+
+3. **Firebase Configuration**
+   - Get config from Firebase Console > Project Settings
+   - Use separate projects for dev/staging/production
+   - Enable App Check for production
+
+### Deployment Security
+
+#### For Development
+```bash
+# Local development
+cp .env.example .env
+# Edit .env with your development keys
+```
+
+#### For Production Deployment
+
+1. **Expo/EAS Build**
+   ```bash
+   # Set in eas.json or via EAS CLI
+   eas secret:create --scope project --name EXPO_PUBLIC_ELEVENLABS_API_KEY --value your_key
+   ```
+
+2. **Vercel Deployment**
+   ```bash
+   # Via Vercel CLI or dashboard
+   vercel env add EXPO_PUBLIC_ELEVENLABS_API_KEY
+   ```
+
+3. **Netlify Deployment**
+   ```bash
+   # Via Netlify CLI or dashboard
+   netlify env:set EXPO_PUBLIC_ELEVENLABS_API_KEY your_key
+   ```
+
+## 🔍 Security Monitoring
+
+### 1. API Usage Monitoring
+
+- **ElevenLabs**: Monitor usage in dashboard
+- **Google Cloud**: Set up billing alerts
+- **Firebase**: Monitor authentication logs
+
+### 2. Error Monitoring
+
+The application now fails securely:
+- Missing API keys cause initialization errors
+- No fallback to insecure defaults
+- Clear error messages for developers
+
+### 3. Access Logging
+
+```typescript
+// Example: Monitor API key usage
+console.log('[Security] API key loaded:', apiKey ? 'SUCCESS' : 'FAILED');
+```
+
+## ⚠️ Troubleshooting
+
+### Common Issues
+
+1. **"API key not found" errors**
+   - Verify .env file exists in project root
+   - Check variable names match exactly
+   - Restart development server after changes
+
+2. **Service initialization failures**
+   - Check API key format (ElevenLabs keys start with specific prefix)
+   - Verify API key permissions
+   - Check network connectivity
+
+3. **Authentication failures**
+   - Verify test credentials are set in environment
+   - Check password complexity requirements
+   - Ensure email format is valid
+
+### Validation Scripts
+
+Create a validation script to check your configuration:
+
+```bash
+# Check environment variables
+node scripts/validate-env.js
+
+# Interactive setup (recommended for first-time setup)
+node scripts/setup-env.js
+```
+
+The validation script will check:
+- All required environment variables are present
+- API keys have correct format and length
+- JWT secrets meet minimum security requirements
+- No compromised or default values are being used
+
+## 📋 Security Checklist
+
+- [ ] Removed all hard-coded API keys
+- [ ] Removed all hard-coded test credentials
+- [ ] Replaced insecure JWT token generation with cryptographically secure tokens
+- [ ] Created .env file with actual values
+- [ ] Generated secure JWT secret (minimum 32 characters)
+- [ ] Added .env to .gitignore
+- [ ] Set up production environment variables
+- [ ] Configured monitoring and alerts
+- [ ] Set up key rotation schedule
+- [ ] Tested all services with new configuration
+- [ ] Validated JWT token generation and verification
+- [ ] Documented access credentials securely
+- [ ] Set up backup access method
+- [ ] Ran environment validation script
+
+## 🆘 Emergency Response
+
+If API keys are compromised:
+
+1. **Immediately revoke the compromised keys** in the respective service dashboards
+2. **Generate new API keys** with different values
+3. **Update environment variables** in all environments
+4. **Deploy updates** to all running instances
+5. **Monitor usage** for suspicious activity
+6. **Review access logs** for unauthorized usage
+
+## 📞 Support
+
+For security-related issues:
+- Review this documentation first
+- Check service-specific documentation (ElevenLabs, Google Cloud, Firebase)
+- Ensure all environment variables are properly configured
+- Test in development before deploying to production
+
+---
+
+**Remember**: Security is not a one-time setup but an ongoing process. Regular reviews and updates are essential to maintain the security of your application.
