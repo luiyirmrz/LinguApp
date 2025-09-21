@@ -125,16 +125,24 @@ class ElevenLabsService {
   private audioCache: Map<string, SpeechResult> = new Map();
 
   constructor() {
+    // Load API key from environment variables - REQUIRED for security
     const apiKey = process.env.EXPO_PUBLIC_ELEVENLABS_API_KEY || '';
-    // Only log API key info in development
+    
+    // Validate API key is provided
+    if (!apiKey) {
+      console.error('[ElevenLabs] SECURITY ERROR: API key not found in environment variables!');
+      console.error('[ElevenLabs] Please set EXPO_PUBLIC_ELEVENLABS_API_KEY in your .env file');
+    }
+    
+    // Only log API key info in development (never log the actual key)
     if (__DEV__) {
-      console.debug('[ElevenLabs] API Key loaded:', apiKey ? `${apiKey.substring(0, 10)}...` : 'NOT FOUND');
-      console.debug('[ElevenLabs] Full API Key length:', apiKey.length);
-      console.debug('[ElevenLabs] API Key starts with:', apiKey.substring(0, 5));
+      console.debug('[ElevenLabs] API Key status:', apiKey ? 'LOADED' : 'MISSING');
+      console.debug('[ElevenLabs] API Key length:', apiKey.length);
+      console.debug('[ElevenLabs] API Key format valid:', apiKey.length > 10);
     }
     
     this.config = {
-      apiKey: apiKey.trim(), // Trim whitespace
+      apiKey: apiKey.trim(), // Trim whitespace - NEVER use fallback values for security
       baseUrl: 'https://api.elevenlabs.io/v1',
       timeout: 30000,
       retryAttempts: 3,
@@ -156,13 +164,11 @@ class ElevenLabsService {
       }
 
       if (!this.config.apiKey) {
-        console.warn('ElevenLabs API key not provided - service will use fallback methods');
-        return;
+        throw new Error('ElevenLabs API key not provided. Please set EXPO_PUBLIC_ELEVENLABS_API_KEY environment variable.');
       }
 
-      if (!this.config.apiKey.startsWith('sk_')) {
-        console.warn('ElevenLabs API key format appears invalid - service will use fallback methods');
-        return;
+      if (!this.config.apiKey.startsWith('sk_') && this.config.apiKey.length < 40) {
+        throw new Error('ElevenLabs API key format appears invalid. Please check your EXPO_PUBLIC_ELEVENLABS_API_KEY environment variable.');
       }
 
       // Load available voices
@@ -174,7 +180,7 @@ class ElevenLabsService {
       console.debug(`ElevenLabs service initialized with ${this.availableVoices.length} voices`);
     } catch (error) {
       console.error('Failed to initialize ElevenLabs service:', error);
-      throw new Error('ElevenLabs initialization failed');
+      throw new Error(`ElevenLabs initialization failed: ${(error as Error).message}`);
     }
   }
 

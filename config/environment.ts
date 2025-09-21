@@ -305,14 +305,31 @@ export const validateEnvironment = (): void => {
   const missingVars = requiredVars.filter(varName => !process.env[varName]);
   
   if (missingVars.length > 0 && isProduction()) {
-    console.warn('Missing required environment variables:', missingVars);
+    throw new Error(`Missing required environment variables in production: ${missingVars.join(', ')}`);
+  } else if (missingVars.length > 0) {
+    console.warn('Missing environment variables (development):', missingVars);
   }
   
   // Validate ElevenLabs configuration
   const elevenLabsConfig = getElevenLabsConfig();
   if (elevenLabsConfig.enableTTS || elevenLabsConfig.enableSTT) {
     if (!elevenLabsConfig.apiKey) {
-      console.warn('ElevenLabs API key is required for TTS/STT features');
+      const message = 'ElevenLabs API key is required for TTS/STT features. Please set EXPO_PUBLIC_ELEVENLABS_API_KEY.';
+      if (isProduction()) {
+        throw new Error(message);
+      } else {
+        console.warn(message);
+      }
+    }
+  }
+  
+  // Validate Google TTS configuration
+  if (!process.env.EXPO_PUBLIC_GOOGLE_TTS_API_KEY) {
+    const message = 'Google TTS API key is required. Please set EXPO_PUBLIC_GOOGLE_TTS_API_KEY.';
+    if (isProduction()) {
+      throw new Error(message);
+    } else {
+      console.warn(message);
     }
   }
 };

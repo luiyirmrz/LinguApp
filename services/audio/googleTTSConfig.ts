@@ -11,8 +11,17 @@ export interface GoogleTTSVoiceConfig {
 }
 
 export class GoogleTTSConfigService {
-  // API Configuration
-  static readonly API_KEY = 'AIzaSyAgOFZ9VfrZmvG9TkqCs2WQc8elCqyS6Yo';
+  // API Configuration - Loaded from environment variables for security
+  private static getApiKey(): string {
+    const apiKey = process.env.EXPO_PUBLIC_GOOGLE_TTS_API_KEY || '';
+    if (!apiKey) {
+      console.error('[Google TTS] SECURITY ERROR: API key not found in environment variables!');
+      console.error('[Google TTS] Please set EXPO_PUBLIC_GOOGLE_TTS_API_KEY in your .env file');
+      throw new Error('Google TTS API key not configured. Please set EXPO_PUBLIC_GOOGLE_TTS_API_KEY environment variable.');
+    }
+    return apiKey;
+  }
+  
   static readonly BASE_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
 
   // Optimized voice configurations for language learning
@@ -158,11 +167,14 @@ export class GoogleTTSConfigService {
     try {
       console.debug(`[TTS DEBUG] Synthesizing "${text}" in ${language} for ${exerciseType}`);
       
+      // Get API key securely
+      const apiKey = this.getApiKey();
+      
       const requestBody = this.createTTSRequest(text, language, exerciseType);
       
       console.debug(`[TTS DEBUG] Sending request to Google with voice: ${requestBody.voice.name}`);
 
-      const response = await fetch(`${this.BASE_URL}?key=${this.API_KEY}`, {
+      const response = await fetch(`${this.BASE_URL}?key=${apiKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -216,6 +228,8 @@ export class GoogleTTSConfigService {
    */
   static async testAPI(): Promise<boolean> {
     try {
+      // Verify API key is available before testing
+      this.getApiKey();
       const result = await this.synthesizeSpeech('Test', 'en', 'sentence');
       return result.success;
     } catch (error) {

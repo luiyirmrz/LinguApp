@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../create-context';
 import { validateEmail } from '../../../../utils/validation';
+import { createAuthResult } from '../../../../utils/auth';
 
 // Input validation schema
 const signinSchema = z.object({
@@ -36,10 +37,17 @@ export default publicProcedure
       // Simulate authentication check - using environment variables for security
       // In a real app, this would verify credentials against the database
       const validCredentials: Record<string, string> = {
-        [process.env.BACKEND_TEST_EMAIL_1 || 'test@example.com']: process.env.BACKEND_TEST_PASSWORD_1 || 'password123',
-        [process.env.BACKEND_DEMO_EMAIL || 'demo@localhost.dev']: process.env.BACKEND_DEMO_PASSWORD || 'DemoPass123!',
-        [process.env.BACKEND_TEST_EMAIL_2 || 'test1@localhost.dev']: process.env.BACKEND_TEST_PASSWORD_2 || 'TestPass123!',
+        [process.env.BACKEND_TEST_EMAIL_1 || '']: process.env.BACKEND_TEST_PASSWORD_1 || '',
+        [process.env.BACKEND_DEMO_EMAIL || '']: process.env.BACKEND_DEMO_PASSWORD || '',
+        [process.env.BACKEND_TEST_EMAIL_2 || '']: process.env.BACKEND_TEST_PASSWORD_2 || '',
       };
+
+      // Remove any empty credential pairs for security
+      Object.keys(validCredentials).forEach(email => {
+        if (!email || !validCredentials[email]) {
+          delete validCredentials[email];
+        }
+      });
 
       if (!validCredentials[sanitizedEmail] || validCredentials[sanitizedEmail] !== input.password) {
         return {
@@ -49,20 +57,15 @@ export default publicProcedure
         };
       }
 
-      // Simulate successful authentication
+      // Simulate successful authentication with secure token generation
       const user = {
-        id: `user_${Date.now()}`,
+        id: `user_${Date.now()}_${Math.random().toString(36).substring(2)}`,
         email: sanitizedEmail,
         name: 'Test User',
-        lastLoginAt: new Date().toISOString(),
       };
 
-      return {
-        success: true,
-        user,
-        token: `jwt_token_${Date.now()}`,
-        message: 'Login successful',
-      };
+      // Use secure token generation instead of predictable timestamp-based tokens
+      return createAuthResult(true, user);
 
     } catch (error) {
       console.error('Signin error:', error);

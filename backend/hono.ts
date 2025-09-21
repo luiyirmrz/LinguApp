@@ -16,6 +16,7 @@ import {
   requestSizeLimit,
   secureCorsOptions, 
 } from './middleware/securityMiddleware';
+import { createAuthResult } from '../utils/auth';
 
 // app will be mounted at /api
 const app = new Hono();
@@ -144,7 +145,9 @@ app.post('/api/auth/signup', async (c) => {
     const sanitizedName = nameValidation.sanitizedValue!;
 
     // Check for duplicate email (in a real app, this would check the database)
-    if (sanitizedEmail === 'test@example.com') {
+    // Use environment variable for test email to avoid hardcoding
+    const testEmail = process.env.BACKEND_TEST_EMAIL_1 || 'configured@example.com';
+    if (sanitizedEmail === testEmail) {
       return c.json({
         success: false,
         error: 'An account with this email already exists',
@@ -152,9 +155,9 @@ app.post('/api/auth/signup', async (c) => {
       }, 409);
     }
 
-    // Simulate user creation
+    // Simulate user creation with secure token generation
     const user = {
-      id: `user_${Date.now()}`,
+      id: `user_${Date.now()}_${Math.random().toString(36).substring(2)}`,
       name: sanitizedName,
       email: sanitizedEmail,
       createdAt: new Date().toISOString(),
@@ -163,9 +166,17 @@ app.post('/api/auth/signup', async (c) => {
 
     console.log('User created successfully:', user);
 
+    // Use secure token generation for new user signup
+    const authResult = createAuthResult(true, {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    });
+
     return c.json({
       success: true,
       user,
+      token: authResult.token,
       message: 'Account created successfully',
     }, 201);
 
@@ -222,10 +233,17 @@ app.post('/api/auth/signin', async (c) => {
 
     // Simulate authentication check - using environment variables for security
     const validCredentials: Record<string, string> = {
-      [process.env.BACKEND_TEST_EMAIL_1 || 'test@example.com']: process.env.BACKEND_TEST_PASSWORD_1 || 'password123',
-      [process.env.BACKEND_DEMO_EMAIL || 'demo@localhost.dev']: process.env.BACKEND_DEMO_PASSWORD || 'DemoPass123!',
-      [process.env.BACKEND_TEST_EMAIL_2 || 'test1@localhost.dev']: process.env.BACKEND_TEST_PASSWORD_2 || 'TestPass123!',
+      [process.env.BACKEND_TEST_EMAIL_1 || '']: process.env.BACKEND_TEST_PASSWORD_1 || '',
+      [process.env.BACKEND_DEMO_EMAIL || '']: process.env.BACKEND_DEMO_PASSWORD || '',
+      [process.env.BACKEND_TEST_EMAIL_2 || '']: process.env.BACKEND_TEST_PASSWORD_2 || '',
     };
+
+    // Remove any empty credential pairs for security
+    Object.keys(validCredentials).forEach(email => {
+      if (!email || !validCredentials[email]) {
+        delete validCredentials[email];
+      }
+    });
 
     if (!validCredentials[sanitizedEmail] || validCredentials[sanitizedEmail] !== password) {
       return c.json({
@@ -235,20 +253,22 @@ app.post('/api/auth/signin', async (c) => {
       }, 401);
     }
 
-    // Simulate successful authentication
+    // Simulate successful authentication with secure token generation
     const user = {
-      id: `user_${Date.now()}`,
+      id: `user_${Date.now()}_${Math.random().toString(36).substring(2)}`,
       email: sanitizedEmail,
       name: 'Test User',
-      lastLoginAt: new Date().toISOString(),
     };
 
     console.log('User signed in successfully:', user);
 
+    // Use secure token generation instead of predictable timestamp-based tokens
+    const authResult = createAuthResult(true, user);
+
     return c.json({
       success: true,
-      user,
-      token: `jwt_token_${Date.now()}`,
+      user: authResult.user,
+      token: authResult.token,
       message: 'Login successful',
     }, 200);
 
